@@ -30,17 +30,18 @@ life_interrupted = false;
 life_respawned = false;
 life_removeWanted = false;
 life_action_gathering = false;
+ife_revive_cops,TRUE); //Set to false if you don't want cops to be able to revive downed players.
+__CONST__(life_revive_fee,250); //Fee for players to pay when revived.
 
+//House Limit
+__CONST__(life_
 //Persistent Saving
 __CONST__(life_save_civ,FALSE); //Save weapons for civs?
 __CONST__(life_save_yinv,FALSE); //Save Y-Inventory for players?
 
 //Revive constant variables.
-__CONST__(life_revive_cops,TRUE); //Set to false if you don't want cops to be able to revive downed players.
-__CONST__(life_revive_fee,250); //Fee for players to pay when revived.
-
-//House Limit
-__CONST__(life_houseLimit,5); //Maximum amount of houses a player can buy (TODO: Make Tiered licenses).
+__CONST__(l
+houseLimit,5); //Maximum amount of houses a player can buy (TODO: Make Tiered licenses).
 
 //Gang related stuff?
 __CONST__(life_gangPrice,75000); //Price for creating a gang (They're all persistent so keep it high to avoid 345345345 gangs).
@@ -87,21 +88,42 @@ life_vehicles = [];
 bank_robber = [];
 switch (playerSide) do
 {
-	case west: 
+	case west:
 	{
-		life_atmcash = 7000; //Starting Bank Money
-		life_paycheck = 500; //Paycheck Amount
+		life_atmcash = 5000; //Starting Bank Money
+		life_paycheck = 2000; //Paycheck Amount
 	};
-	case civilian: 
+	case civilian:
 	{
-		life_atmcash = 3000; //Starting Bank Money
-		life_paycheck = 350; //Paycheck Amount
+		life_atmcash = 5000; //Starting Bank Money
+		life_paycheck = 1500; //Paycheck Amount
 	};
-	
+
 	case independent: {
-		life_atmcash = 6500;
-		life_paycheck = 450;
+		life_atmcash = 5000;
+		life_paycheck = 2500;
 	};
+};
+
+// Salaire des Gendarmes
+if (playerside == west) then
+{
+     switch(life_coplevel) do
+     {
+          case 0: {life_paycheck = life_paycheck;};
+          case 1: {life_paycheck = life_paycheck + 1000;};//GAV
+          case 2: {life_paycheck = life_paycheck + 1500;};//Gendarme
+          case 3: {life_paycheck = life_paycheck + 2000;};// Gendarme de Carriere
+          case 4: {life_paycheck = life_paycheck + 2500;};// MDLC
+          case 5: {life_paycheck = life_paycheck + 3000;};// ADJ
+          case 6: {life_paycheck = life_paycheck + 4000;};//ADJ C
+          case 7: {life_paycheck = life_paycheck + 5000;};// Major
+          case 8: {life_paycheck = life_paycheck + 6000;};//SL
+          case 9: {life_paycheck = life_paycheck + 7000;};// Lieutenant
+          case 10: {life_paycheck = life_paycheck + 8000;};// Capitaine
+          case 11: {life_paycheck = life_paycheck + 9000;};//Colonel
+          case 12: {life_paycheck = life_paycheck + 10000;};//Général
+     };
 };
 
 /*
@@ -110,7 +132,7 @@ switch (playerSide) do
 life_vShop_rentalOnly = ["B_MRAP_01_hmg_F","B_G_Offroad_01_armed_F"];
 __CONST__(life_vShop_rentalOnly,life_vShop_rentalOnly); //These vehicles can never be bought and only 'rented'. Used as a balancer & money sink. If you want your server to be chaotic then fine.. Remove it..
 
-life_inv_items = 
+life_inv_items =
 [
 	"life_inv_oilu",
 	"life_inv_oilp",
@@ -203,7 +225,7 @@ life_illegal_items = [["heroinu",1200],["heroinp",2500],["cocaine",1500],["cocai
 /*
 	Sell / buy arrays
 */
-sell_array = 
+sell_array =
 [
 	["apple",50],
 	["heroinu",1850],
@@ -242,7 +264,7 @@ sell_array =
 ];
 __CONST__(sell_array,sell_array);
 
-buy_array = 
+buy_array =
 [
 	["apple",65],
 	["rabbit",75],
